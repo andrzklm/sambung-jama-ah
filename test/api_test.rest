@@ -1,0 +1,64 @@
+@baseUrl = http://localhost:3000/api
+@token = {{loginDKM.response.body.data.token}}
+
+### 1. Cek Koneksi Server & Database
+GET {{baseUrl}}/health
+
+### 2. Login Pengurus DKM (Otomatis simpan token ke @token)
+# @name loginDKM
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "pengurus@sambungjamaah.id",
+  "password": "amanah123"
+}
+
+### 3. Read - Lihat Semua Jadwal Kegiatan
+GET {{baseUrl}}/kegiatan
+Authorization: Bearer {{token}}
+
+### 4. Create - Tambah Jadwal Kegiatan (Khusus DKM)
+POST {{baseUrl}}/kegiatan
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "judul_kegiatan": "Musyawarah Persiapan Ramadhan",
+  "kategori": "Musyawarah Pengurus DKM",
+  "deskripsi": "Koordinasi jadwal kajian dan konsumsi buka bersama.",
+  "tanggal": "2026-12-05",
+  "waktu_mulai": "19:30",
+  "waktu_selesai": "21:00",
+  "tempat": "Aula Masjid Al-Falah"
+}
+
+### 5. Update - Edit Jadwal Kegiatan ID 1 (Khusus DKM)
+PUT {{baseUrl}}/kegiatan/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "judul_kegiatan": "Pengajian Rutin Malam Ahad",
+  "kategori": "Pengajian Rutin Umum",
+  "deskripsi": "Pembahasan tafsir tematik dan tanya jawab jama'ah.",
+  "tanggal": "2026-12-06",
+  "waktu_mulai": "19:30",
+  "waktu_selesai": "21:30",
+  "tempat": "Ruang Utama Masjid"
+}
+
+### 6. Create - Isi Presensi Kehadiran
+POST {{baseUrl}}/presensi
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "kegiatan_id": 1,
+  "is_perwakilan": false,
+  "status_kehadiran": "Hadir"
+}
+
+### 7. Read - Rekap Presensi Semua Jama'ah (Khusus DKM)
+GET {{baseUrl}}/presensi/dkm/all
+Authorization: Bearer {{token}}

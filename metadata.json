@@ -1,0 +1,6 @@
+{
+  "name": "Sambung Jama'ah",
+  "description": "Informasi Terobosan & Presensi Kehadiran Sambung Jama'ah.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
